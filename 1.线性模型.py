@@ -1,11 +1,11 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-x_data = [1.0, 2.0, 3.0]
-y_data = [2.0, 4.0, 6.0]
+input_data = [1.0, 2.0, 3.0]
+target_data = [2.0, 4.0, 6.0]
 
 def forward(x):
-    return x * w
+    return x * w # 预测函数`
 
 def loss(x,y):
     y_pred = forward(x)
@@ -18,7 +18,7 @@ mse_list = []
 for w in np.arange(0.0, 6.1, 0.1): # 遍历权重，步长为0.1，范围为0-4
     print('w=',w)
     total_loss = 0
-    for x_val, y_val in zip(x_data, y_data):
+    for x_val, y_val in zip(input_data, target_data):
         y_pred_val = forward(x_val)
         loss_val = loss(x_val, y_val)
         total_loss += loss_val
