@@ -4,25 +4,24 @@ import matplotlib.pyplot as plt
 input_data = [1.0, 2.0, 3.0]
 target_data = [2.0, 4.0, 6.0]
 
-def forward(x):
-    return x * w # 预测函数`
+def forward(x): # 预测函数
+    return x * w # 返回预测值（权重乘输入值）
 
-def loss(x,y):
-    y_pred = forward(x)
-    return (y_pred - y) * (y_pred - y)
+def loss(x,y): # 损失函数
+    y_pred = forward(x) # 计算预测值
+    return (y_pred - y) * (y_pred - y) # 返回平方误差
 
-# 记录权重和均方误差列表
-w_list = []
+w_list = [] # 记录权重和均方误差列表
 mse_list = []
 
 for w in np.arange(0.0, 6.1, 0.1): # 遍历权重，步长为0.1，范围为0-4
     print('w=',w)
     total_loss = 0
-    for x_val, y_val in zip(input_data, target_data):
-        y_pred_val = forward(x_val)
-        loss_val = loss(x_val, y_val)
-        total_loss += loss_val
-        print('\t',x_val,y_pred_val,loss_val)
+    for x_value, y_value in zip(input_data, target_data):
+        y_pred_value = forward(x_value) # 计算输入值计算预测值
+        loss_value = loss(x_value, y_value) # 计算当前数据点的损失值
+        total_loss += loss_value # 累加损失值
+        print('\t', x_value, y_pred_value, loss_value)
     print('MSE=',total_loss/3)
     w_list.append(w)
     mse_list.append(total_loss/3)
