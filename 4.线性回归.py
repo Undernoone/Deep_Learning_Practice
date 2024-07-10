@@ -1,12 +1,7 @@
 import torch
 
-# 检查是否有GPU可用，如果有，则使用GPU，否则使用CPU
-device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
-# 打印当前使用的设备
-print(f'当前使用的设备: {device}')
 
-# 将输入数据和目标数据移动到选择的设备（CPU或GPU）
 input_data = torch.tensor([[1.0], [2.0], [3.0], [4.0]]).to(device)
 target_data = torch.tensor([[2.0], [4.0], [6.0], [8.0]]).to(device)
 

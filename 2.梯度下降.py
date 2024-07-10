@@ -16,8 +16,7 @@ import matplotlib.pyplot as plt
 #         cost += (y_pred - y)**2
 #     return cost / len(xs)
 #
-# # 梯度函数
-# def gradient(xs, ys):
+# def gradient(xs, ys): # 梯度函数
 #     grad = 0
 #     for x,y in zip(xs, ys):
 #         grad += 2 * x * (x * w - y)
@@ -40,6 +39,7 @@ import matplotlib.pyplot as plt
 # plt.ylabel('Cost')
 # plt.title('Training Loss')
 # plt.show()
+
 
 input_data = [1.0, 2.0, 3.0]
 target_data = [2.0, 4.0, 6.0]
@@ -75,3 +75,17 @@ plt.xlabel('Epoch')
 plt.ylabel('Loss')
 plt.title('Training Loss')
 plt.show()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
