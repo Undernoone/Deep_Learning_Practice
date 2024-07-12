@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 # 多维特征的处理
 # 例如二手车的价格预测受很多因素影响，包括品牌、型号、年份、驾驶情况、使用情况等等
 # 每个因素看做一个维度，可以用一个10维的向量来表示
-file_path = r'D:\Anaconda\pkgs\scikit-learn-1.2.2-py311hd77b12b_1\Lib\site-packages\sklearn\datasets\data\diabetes_data.csv'
+file_path = r'D:\Anoconda\pkgs\scikit-learn-1.2.2-py311hd77b12b_1\Lib\site-packages\sklearn\datasets\data\diabetes_data.csv'
 xy = np.loadtxt(file_path, delimiter=' ', dtype=np.float32)
 x_data = torch.from_numpy(xy[:, :-1]) # 不取最后一列
 y_data = torch.from_numpy(xy[:, [-1]]) # 只取最后一列
