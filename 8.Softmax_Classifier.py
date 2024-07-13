@@ -5,24 +5,13 @@ from torch.utils.data import DataLoader
 import torch.nn.functional as F
 import torch.optim as optim
 
-# 检查是否有可用的GPU
-device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-
 batch_size = 64
-
-# 定义数据变换
-transform = transforms.Compose([transforms.ToTensor(),
-                                transforms.Normalize((0.1307,), (0.3081,))])
-
-# 加载训练集
-train_dataset = datasets.MNIST('../data', train=True, download=True, transform=transform)
+transform = transforms.Compose([transforms.ToTensor(),transforms.Normalize((0.1307,), (0.3081,))])
+train_dataset = datasets.MNIST('../Deeplearing_data', train=True, download=True, transform=transform)
 train_loader = DataLoader(train_dataset, batch_size=batch_size, shuffle=True)
-
-# 加载测试集
-test_dataset = datasets.MNIST('../data', train=False, transform=transform)
+test_dataset = datasets.MNIST('../Deeplearing_data', train=False, transform=transform)
 test_loader = DataLoader(test_dataset, batch_size=batch_size, shuffle=True)
 
-# 定义神经网络
 class Net(nn.Module):
     def __init__(self):
         super(Net, self).__init__()
@@ -33,24 +22,22 @@ class Net(nn.Module):
         self.fc5 = nn.Linear(64, 10)
 
     def forward(self, x):
-        x = x.view(-1, 784)
+        x = x.view(-1, 784) # 展平输入数据
         x = F.relu(self.fc1(x))
         x = F.relu(self.fc2(x))
         x = F.relu(self.fc3(x))
         x = F.relu(self.fc4(x))
         return self.fc5(x)
 
-model = Net().to(device)  # 将模型移动到GPU
+model = Net()
 
 criterion = nn.CrossEntropyLoss()
 optimizer = optim.SGD(model.parameters(), lr=0.01, momentum=0.5)
 
 def train(epoch):
-    model.train()
     running_loss = 0.0
     for batch_idx, data in enumerate(train_loader):
         inputs, labels = data
-        inputs, labels = inputs.to(device), labels.to(device)  # 将数据移动到GPU
         optimizer.zero_grad()
         outputs = model(inputs)
         loss = criterion(outputs, labels)
@@ -62,21 +49,33 @@ def train(epoch):
             running_loss = 0.0
 
 def test():
-    model.eval()
     correct = 0
     total = 0
     with torch.no_grad():
         for data in test_loader:
             images, labels = data
-            images, labels = images.to(device), labels.to(device)  # 将数据移动到GPU
             outputs = model(images)
             _, predicted = torch.max(outputs.data, 1)
             total += labels.size(0)
             correct += (predicted == labels).sum().item()
-    print('Accuracy on test set: %d %%' % (100 * correct / total))
+    print('Accuracy on test set: %d %%' % (100 * correct / total)),
 
 if __name__ == '__main__':
     for epoch in range(10):
         train(epoch)
         test()
 
+# # 交叉熵损失函数
+# criterion = torch.nn.CrossEntropyLoss()
+#
+# Y = torch.tensor([2, 0, 1])
+# Y_pred_1 = torch.tensor([[0.1, 0.2, 0.9],
+#                       [1.1, 0.1, 0.2],
+#                       [0.2, 2.1, 0.1]])
+# Y_pred_2 = torch.tensor([[0.8, 0.2, 0.3],
+#                       [0.2, 0.3, 0.5],
+#                       [0.2, 0.2, 0.5]])
+#
+# l1 = criterion(Y_pred_1, Y)
+# l2 = criterion(Y_pred_2, Y)
+# print("Batch Loss 1:", l1.item(), "\nBatch Loss 2:", l2.item())
